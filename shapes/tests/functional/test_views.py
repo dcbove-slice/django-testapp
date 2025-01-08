@@ -1,3 +1,4 @@
+import json
 from typing import Dict, List
 
 import pytest
@@ -21,7 +22,7 @@ def test_add_shape(client, test_data):
     url = reverse("shape-list")
     resp = client.post(
         url,
-        test_data,
+        json.dumps(test_data),
         content_type="application/json",
     )
     assert resp.status_code == 201
@@ -36,7 +37,7 @@ def test_add_shape(client, test_data):
 @pytest.mark.parametrize(
     "test_data",
     [
-        {"name": "Square", "face_count": "Some ramdom number", "is_sharp": True},
+        {"name": "Square", "face_count": "Some random number", "is_sharp": True},
         {"name": "Triangle", "face_count": 3, "is_sharp": "Maybe"},
         {"name": "Circle"},
     ],
@@ -48,7 +49,7 @@ def test_add_shape_fail(client, test_data):
     url = reverse("shape-list")
     resp = client.post(
         url,
-        test_data,
+        json.dumps(test_data),
         content_type="application/json",
     )
     assert resp.status_code == 400
@@ -67,6 +68,7 @@ def test_get_shape(client, add_shape, test_data):
     assert resp.data["name"] == test_data.get("name")
 
 
+@pytest.mark.django_db
 def test_get_shape_fail(client):
     url = reverse("shape-list")
     resp = client.get(f"{url}foo/")
