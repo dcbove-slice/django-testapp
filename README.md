@@ -132,6 +132,25 @@ debug the tests within VSCode by using these rather standard test settings. I pu
 }
 ```
 
+You'll also need the environment variables set somewhere.  Below you'll see different examples for
+where the environment variables come from.  For this scenario, you'll need them exported within the terminal
+window where the tests. I put the values in an `.env` file at the base of the project.
+
+```
+PYTHONPATH=.:$PYTHONPATH
+DEBUG=1
+SECRET_KEY=foo
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+SQL_ENGINE=django.db.backends.postgresql
+SQL_DATABASE=widget_dev
+SQL_USER=testapp
+SQL_PASSWORD=testapp
+SQL_HOST=localhost
+SQL_PORT=5432
+DATABASE=postgres
+DJANGO_SETTINGS_MODULE=widget_project.settings
+``` 
+
 #### pytest in Docker
 
 Always, and especially during automated processes, it's nice to be able to run all your tests with a simple
