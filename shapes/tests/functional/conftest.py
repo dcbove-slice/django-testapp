@@ -1,8 +1,10 @@
 from typing import Callable
 
 import pytest
+from rest_framework.test import APIClient
 
 from shapes.models import Shape
+from user_app.models import CustomUser
 
 
 @pytest.fixture(scope="function")
@@ -12,3 +14,11 @@ def add_shape() -> Callable[[str, int, bool], Shape]:
         return shape
 
     return _add_shape
+
+
+@pytest.fixture
+def client() -> "rest_framework.test.APIClient":
+    user = CustomUser.objects.create_user(username="superuser", password="superuser")
+    rest_api_client = APIClient()
+    rest_api_client.force_authenticate(user=user)
+    return rest_api_client

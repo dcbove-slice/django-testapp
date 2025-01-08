@@ -11,7 +11,7 @@ This app mostly just is:
 * An extremely basic HTML page to show off the shapes.
 
 And among the most obvious reasons this isn't production quality are:
-* I've currently got most of the authentication turned off.
+* I've got Basic Auth for the REST endpoints and a default login for the admin console, but I need to look at this more.
 * I've got the DEBUG flags on.
 
 ## Project Creation
@@ -261,7 +261,8 @@ an example:
   ```
   curl --location 'http://localhost:8009/api/shape/' \
     --header 'Content-Type: application/json' \
-    --data '{"name": "dodecahedron", "face_count": 10, "is_sharp": false}'
+    --header 'Authorization: Basic c3VwZXJ1c2VyOnN1cGVydXNlcg==' \
+    --data '{"name": "pyramid", "face_count": 5, "is_sharp": true}'
   ```
 * Then see it with: `curl --location 'http://localhost:8009/api/shape/'`
 * And delete it with: `curl --location --request DELETE 'http://localhost:8009/api/shape/{shape-id}/'`
