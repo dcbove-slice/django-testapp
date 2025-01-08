@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shape List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .shape-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .shape-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 280px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .shape-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .shape-card h2 {
+            color: #16a085;
+            font-size: 24px;
+        }
+
+        .shape-card p {
+            color: #34495e;
+            font-size: 16px;
+        }
+
+        .shape-card .created-date {
+            color: #95a5a6;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .shape-card .is-sharp {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .shape-card .is-sharp.true {
+            color: #2ecc71;
+        }
+
+        .shape-card .button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .shape-card .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shape List</h1>
+    <div class="shape-list">
+        {% for shape in shapes %}
+            <div class="shape-card">
+                <h2>{{ shape.name }}</h2>
+                <p><strong>Shape ID:</strong> {{ shape.id }}</p>
+                <p><strong>Face Count:</strong> {{ shape.face_count }}</p>
+                <p><strong>Is Sharp:</strong> <span class="is-sharp {% if shape.is_sharp %}true{% endif %}">{{ shape.is_sharp|yesno:"Yes,No" }}</span></p>
+                <p class="created-date"><strong>Created:</strong> {{ shape.created_date|date:"F j, Y, g:i a" }}</p>
+                <a href="#" class="button">View Details</a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

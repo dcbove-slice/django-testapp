@@ -10,6 +10,10 @@ This app mostly just is:
 * A RESTful interface that does some basic CRUD stuff for shapes.
 * An extremely basic HTML page to show off the shapes.
 
+And among the most obvious reasons this isn't production quality are:
+* I've currently got most of the authentication turned off.
+* I've got the DEBUG flags on.
+
 ## Project Creation
 
 You don't need to perform these steps if you fetch the project from GitHub.  But, for a new project,
@@ -122,6 +126,9 @@ During development, it's nice to be able to run and debug your unit tests. For t
 debug the tests within VSCode by using these rather standard test settings. I pulled these from
 `.vscode/settings.json`.
 
+Again, note, all of this setup specifically regarding the execution of tests within the
+IDE is VSCode specific.
+
 ```
 {
     "python.testing.pytestArgs": [
@@ -132,10 +139,32 @@ debug the tests within VSCode by using these rather standard test settings. I pu
 }
 ```
 
+You'll also need the environment variables set somewhere.  Below you'll see different examples for
+where the environment variables come from.  For this scenario, you'll need them exported within the terminal
+window where the tests. I put the values in an `.env` file at the base of the project.
+
+```
+PYTHONPATH=.:$PYTHONPATH
+DEBUG=1
+SECRET_KEY=foo
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+SQL_ENGINE=django.db.backends.postgresql
+SQL_DATABASE=widget_dev
+SQL_USER=testapp
+SQL_PASSWORD=testapp
+SQL_HOST=localhost
+SQL_PORT=5432
+DATABASE=postgres
+DJANGO_SETTINGS_MODULE=widget_project.settings
+``` 
+
 #### pytest in Docker
 
 Always, and especially during automated processes, it's nice to be able to run all your tests with a simple
-command line. Try these (with and without coverage stats);
+command line. Remember, the environmental variables that this relies upon are configured in `.env.dev` and set
+within the docker-compose.yml file.
+
+Try these commands to run tests (with and without coverage stats):
 
 ```
 docker compose exec app python -m pytest
@@ -165,7 +194,7 @@ The valuable thing about this setup is that you can debug the running Django app
 
 So:
 * Start the docker compose environment: `docker compose up --build -d`.
-* Use this launch configuration in VSCode:
+* Use this launch configuration in VSCode (you can see that the environment variables are set here):
   ```
   {
     "version": "0.2.0",

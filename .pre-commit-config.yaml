@@ -1,0 +1,32 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-docstring-first
+        stages: [commit, manual]
+      - id: check-merge-conflict
+        stages: [commit, manual]
+      - id: trailing-whitespace
+        stages: [commit, manual]
+      - id: end-of-file-fixer
+        stages: [commit, manual]
+      - id: check-yaml
+        stages: [commit, manual]
+      - id: check-ast
+        stages: [commit, manual]
+  - repo: https://github.com/ambv/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        stages: [commit, manual]
+        entry: black .
+        always_run: true
+  - repo: local
+    hooks:
+      - id: pylint
+        stages: [commit]
+        name: pylint
+        entry: pylint --disable=all .
+        language: python
+        types: [python]
+        always_run: true

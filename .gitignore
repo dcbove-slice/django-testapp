@@ -1,0 +1,17 @@
+__pycache__
+__pycache__/
+.pytest_cache/
+.python-version
+.vscode/
+.venv/
+
+*.code-workspace
+.env
+
+.DS_Store
+.terraform/
+terraform.*
+.terraform.lock.hcl
+builds/
+tmp/
+.coverage
