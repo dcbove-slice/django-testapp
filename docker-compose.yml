@@ -24,17 +24,19 @@ services:
       - POSTGRES_PASSWORD=testapp
       - POSTGRES_DB=widget_dev
 
-  # redis:
-  #   image: redis:7
-  #   stop_signal: SIGTERM
-  #   container_name: redis
-  #   ports:
-  #     - "6379:6379"
-  #   volumes:
-  #     - redis_data:/data
-  #   # command: ["redis-server", "--appendonly", "yes", "--requirepass", "yourpassword"] # comment out auth
-  #   command: ["redis-server", "--save", "", "--appendonly", "no"]
+  redis:
+    image: redis:7
+    stop_signal: SIGTERM
+    container_name: redis
+    ports:
+      - "6379:6379"
+    expose:
+      - 6379
+    volumes:
+      - redis_data:/data
+    # command: ["redis-server", "--appendonly", "yes", "--requirepass", "yourpassword"] # comment out auth
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
 
 volumes:
   postgres_data:
-  # redis_data:
+  redis_data:
