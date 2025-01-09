@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -20,6 +21,9 @@ class ShapeList(ModelViewSet):
         return Response({"sharp_items_count": item_count})
 
 
+@login_required
 def shapes_page(request):
+    request.session["test_key"] = "test_value"
+
     shapes = Shape.objects.all()  # Query for all Shape objects
     return render(request, "shapes/shapes_page.html", {"shapes": shapes})

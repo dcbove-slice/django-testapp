@@ -88,7 +88,7 @@
                 <p><strong>Face Count:</strong> {{ shape.face_count }}</p>
                 <p><strong>Is Sharp:</strong> <span class="is-sharp {% if shape.is_sharp %}true{% endif %}">{{ shape.is_sharp|yesno:"Yes,No" }}</span></p>
                 <p class="created-date"><strong>Created:</strong> {{ shape.created_date|date:"F j, Y, g:i a" }}</p>
-                <a href="#" class="button">View Details</a>
+                <a href="../api/shape/{{ shape.id }}/" class="button">View Details</a>
             </div>
         {% endfor %}
     </div>

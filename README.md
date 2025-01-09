@@ -12,6 +12,7 @@ This app mostly just is:
 
 And among the most obvious reasons this isn't production quality are:
 * I've got Basic Auth for the REST endpoints and a default login for the admin console, but I need to look at this more.
+* The database and redis are exposing their ports (via the docker-compose file) in a manner that doesn't suit production.
 * I've got the DEBUG flags on.
 
 ## Project Creation
@@ -80,6 +81,17 @@ docker compose exec db psql --username=testapp --dbname widget_dev
 \c widget_dev
 \dt
 \q
+```
+
+### Examine Sessions in Redis
+
+In order to support multiple Django instances behind a load balancer without any
+sticky session nonsense, session storage is in Redis.
+
+```
+docker compose exec redis redis-cli
+select 1
+keys "*"
 ```
 
 #### Database Reset
@@ -156,7 +168,7 @@ SQL_HOST=localhost
 SQL_PORT=5432
 DATABASE=postgres
 DJANGO_SETTINGS_MODULE=widget_project.settings
-``` 
+```
 
 #### pytest in Docker
 

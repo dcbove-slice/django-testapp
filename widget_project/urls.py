@@ -16,6 +16,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.contrib.auth.views import LoginView
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
@@ -27,5 +28,6 @@ project_router.register("shape", ShapeList, basename="shape")
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(project_router.urls)),
+    path("login/", LoginView.as_view(), name="login"),
     path("shapes/", shapes_page, name="shapes_page"),
 ]

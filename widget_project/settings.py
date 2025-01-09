@@ -150,3 +150,64 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ],
 }
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+SESSION_COOKIE_AGE = 3600
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+        "KEY_PREFIX": "widget_project",
+    }
+}
+
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = "/shapes/"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {name} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",  # Attach the verbose formatter
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "debug.log",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+        "django_redis": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+        },
+        "django.db.backends": {  # Logs database queries (useful if sessions are stored in DB)
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+        "django.request": {  # Logs request/response cycles
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+        "django.server": {  # Logs server errors
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+    },
+}
