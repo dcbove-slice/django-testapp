@@ -45,6 +45,7 @@ This should set up the shell of a Django application that is available at 8009 a
 ```
 poetry install
 poetry export --without-hashes --format=requirements.txt > requirements.txt
+python manage.py collectstatic
 docker-compose up --build -d
 ```
 

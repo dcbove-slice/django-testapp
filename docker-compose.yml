@@ -1,7 +1,8 @@
 services:
   app:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    # command: python manage.py runserver 0.0.0.0:8000 # switch to gunicorn
+    command: gunicorn -c gunicorn.conf.py widget_project.wsgi:application
     volumes:
       - .:/usr/src/app/
     ports:
