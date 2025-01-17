@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from django.shortcuts import render
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -14,6 +15,18 @@ class ShapeList(ModelViewSet):
     queryset = Shape.objects.all()
     serializer_class = ShapeSerializer
     permission_classes = [IsAuthenticated]
+
+    @transaction.atomic
+    def perform_create(self, serializer):
+        serializer.save()
+
+    @transaction.atomic
+    def perform_update(self, serializer):
+        serializer.save()
+
+    @transaction.atomic
+    def perform_destroy(self, instance):
+        instance.delete()
 
     @action(detail=False, methods=["get"])
     def sharp_items(self, request):
